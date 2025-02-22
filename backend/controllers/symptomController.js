@@ -1,6 +1,7 @@
 import Symptom from "../models/symptomModel.js";
 import evaluateSymptoms from "../schedules/symptomEvaluator.js";
 import mongoose from 'mongoose';
+import { analyzeSymptoms } from "./analyseController.js";
 
 export const submitSymptoms = async (req, res) => {
   try {
@@ -22,11 +23,12 @@ export const submitSymptoms = async (req, res) => {
     }
 
     // Generate personalized response
-    const message = evaluateSymptoms(symptomLog.symptoms, symptomLog.oxygenLevel, symptomLog.heartRate, symptomLog.oxygenStatus);
+    const GeminiData =await analyzeSymptoms(symptomLog.symptoms, symptomLog.oxygenLevel, symptomLog.heartRate, symptomLog.notes);
+    console.log(GeminiData);
 
     res.status(200).json({
       success: true,
-      message,
+      GeminiData,
       symptoms:symptomLog.symptoms,
       oxygenLevel: symptomLog.oxygenLevel,
       heartRate: symptomLog.heartRate,

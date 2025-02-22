@@ -14,6 +14,16 @@ function TrackAllSymptoms() {
   const [coords, setCoords] = useState({ latitude: null, longitude: null });
   const [chartData, setChartData] = useState([]);
   const [aqi, setAqi] = useState(null);
+  const [GeminiData, setGeminiData] = useState({
+    RiskLevel: "",
+    PotentialConditions: [],
+    DoctorSpecialization: "",
+    ActionableRecommendations: {
+      EmergencyCare: [],
+      HomeCare: [],
+    },
+  });
+  
 
   // Fetching data for LineChart, BarChart
   useEffect(() => {
@@ -47,18 +57,12 @@ function TrackAllSymptoms() {
         });
 
         // Log the barChartData for validation
-        console.log(data);
+        console.log(data.GeminiData);
+        setGeminiData(data.GeminiData);
 
         if (data.success) {
           // Set the barChartData here
           setData(data);   // Assuming you have a state for barChartData
-
-          if(data.oxygenStatus==="Risky"){
-            const {data} =await axios.get(`${backendUrl}/api/user/emergrncy-alert`,{ headers: { uToken: uToken }});
-            if( data.success){
-              toast.success(data.message);
-            }
-          }
         } else {
           console.log('Error fetching bar chart data!');
         }
@@ -78,6 +82,7 @@ function TrackAllSymptoms() {
   const COLORS = ['#82ca9d', '#8884d8'];
 
   // aqi ...
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -163,33 +168,48 @@ function TrackAllSymptoms() {
 
       
       <div className="health-assessment">
-      {/* Header */}
-      <h2 className="font-medium text-3xl text-neutral-800 mt-4">Personalized Health Assessment</h2>
-
-      {/* Message */}
-      <div className="message mt-4 p-4 bg-yellow-100 rounded-md">
-        <p>{data.message}</p>
-    </div>
 
 
-
-      {/* Emergency Alert Section (only show if Oxygen Level is risky) */}
+              {/* Emergency Alert Section (only show if Oxygen Level is risky) */}
       {data.oxygenLevel < 90 && (
         <div className="emergency-alert mt-6 p-4 bg-red-100 border-l-4 border-red-600 rounded-md">
           <h3 className="font-medium text-xl text-red-600">Emergency Alert</h3>
           <p className="text-sm text-red-700 mt-2">
-            Your oxygen level is risky. Please take immediate action and alert emergency services.
+            Your oxygen level is risky. Please take immediate action and the alert emergency message already Provided.
           </p>
-          <div className="mt-4 flex space-x-4">
-            <input 
-              type="text" 
-              className="p-2 border rounded-md w-full" 
-              placeholder="Enter emergency contact or email..." 
-            />
-            <button className="p-2 bg-red-600 text-white rounded-md">Send Alert</button>
-          </div>
         </div>
       )}
+
+
+      {/* Header */}
+      <h2 className="font-medium text-3xl text-neutral-800 mt-4">Personalized Health Assessment</h2>
+
+    <div className="p-6 bg-gray-100 min-h-screen flex items-center justify-center">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold text-red-600 mb-4">Risk Level: {GeminiData.RiskLevel}</h2>
+        <p className="text-lg font-semibold">Potential Conditions:</p>
+        <ul className="list-disc pl-6 text-gray-700">
+          {GeminiData.PotentialConditions.map((condition, index) => (
+            <li key={index}>{condition}</li>
+          ))}
+        </ul>
+        <p className="mt-4 text-lg font-semibold">Doctor Specialization:</p>
+        <p className="text-gray-700">{GeminiData.DoctorSpecialization}</p>
+        <p className="mt-4 text-lg font-semibold text-red-600">Emergency Care Recommendations:</p>
+        <ul className="list-disc pl-6 text-gray-700">
+          {GeminiData.ActionableRecommendations.EmergencyCare.map((rec, index) => (
+            <li key={index}>{rec}</li>
+          ))}
+        </ul>
+        <p className="mt-4 text-lg font-semibold text-green-600">Home Care Recommendations:</p>
+        <ul className="list-disc pl-6 text-gray-700">
+          {GeminiData.ActionableRecommendations.HomeCare.map((rec, index) => (
+            <li key={index}>{rec}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
     </div>
 
       {/* LineChart */}

@@ -6,6 +6,8 @@ import symptomCheck from "../middlewares/symptomCheck.js";
 import { bookAppointment, getAppointments,getDocAppointment,cancleAppointment } from '../controllers/appointmentController.js';
 import { submitSymptoms,weeklySymptomsAnalyse } from "../controllers/symptomController.js";
 import { emergencyAlert } from "../schedules/reminderScheduler.js";
+import { analyzeSymptoms } from '../controllers/analyseController.js';
+
 
 const userRouter =express.Router();
 
