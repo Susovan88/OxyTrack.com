@@ -9,6 +9,7 @@ import doctorRouter from "./routes/doctorRoute.js"
 import scheduleReminders from "./schedules/reminderScheduler.js"
 import { AQIconfig } from "./config/AQI.js";
 import AQIrouter from "./routes/aqiRoute.js";
+import Analyzerouter from "./routes/analyseRoute.js";
 
 
 env.config();
@@ -35,6 +36,8 @@ app.use('/api/admin',adminRouter);
 app.use("/api/doctor",doctorRouter);
 
 app.use('/api/aqi', AQIrouter);
+
+app.use('/api/analyze', Analyzerouter);
 
 app.get("/" ,(req,res)=>{
     res.send("Hello world");
