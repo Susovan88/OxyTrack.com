@@ -130,6 +130,8 @@ const [address2, setAddress2] = useState("");
               <option value="Dermatology">Dermatologist</option>
               <option value="Neurology">Neurologist</option>
               <option value="Pediatricians">Pediatricians</option>
+              <option value="Immunologist">Immunologist</option> 
+              <option value="Pulmonologist">Pulmonologist</option>
               <option value="Gynecologist">Gynecologist</option> 
               <option value="Gastroenterologist">Gastroenterologist</option> 
             </select>
