@@ -3,6 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import axios from 'axios';
 import { UseUserContext } from "../context/UserContext.jsx";
 import PieChartWithCustomizedLabel from'./PieChartOfAqi.jsx';
+import {toast} from "react-toastify";
 
 function TrackAllSymptoms() {
   const [symptomsData, setSymptomsData] = useState([]);
@@ -50,7 +51,14 @@ function TrackAllSymptoms() {
 
         if (data.success) {
           // Set the barChartData here
-          setData(data); // Assuming you have a state for barChartData
+          setData(data);   // Assuming you have a state for barChartData
+
+          if(data.oxygenStatus==="Risky"){
+            const {data} =await axios.get(`${backendUrl}/api/user/emergrncy-alert`,{ headers: { uToken: uToken }});
+            if( data.success){
+              toast.success(data.message);
+            }
+          }
         } else {
           console.log('Error fetching bar chart data!');
         }
