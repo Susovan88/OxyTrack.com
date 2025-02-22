@@ -5,6 +5,7 @@ import upload from "../middlewares/multor.js";
 import symptomCheck from "../middlewares/symptomCheck.js";
 import { bookAppointment, getAppointments,getDocAppointment,cancleAppointment } from '../controllers/appointmentController.js';
 import { submitSymptoms,weeklySymptomsAnalyse } from "../controllers/symptomController.js";
+import { emergencyAlert } from "../schedules/reminderScheduler.js";
 
 const userRouter =express.Router();
 
@@ -39,6 +40,9 @@ userRouter.delete('/book-appointment/:id', authUser, cancleAppointment);
 
 
 userRouter.get('/analyse-symptom',authUser,submitSymptoms);
+
+
+userRouter.get('/emergrncy-alert',authUser,emergencyAlert);
 
 
 

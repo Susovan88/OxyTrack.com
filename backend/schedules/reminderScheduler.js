@@ -96,4 +96,58 @@ const scheduleReminders = async () => {
   }
 };
 
-export default scheduleReminders;
+
+const emergencyAlert = async (req,res) => {
+  try {
+
+    const user= req.user;
+    console.log(`Sending emergency alerts for ${user.name}`);
+
+    if (user.emergencyContacts && user.emergencyContacts.length > 0) {
+      for (const contact of user.emergencyContacts) {
+        // Send Email Alert
+        const mailOptions = {
+          from: process.env.EMAIL_USER,
+          to: contact.email,
+          subject: '🚨 Emergency Alert!',
+          html: `
+            <div style="font-family: Arial, sans-serif; background-color: #fff3f3; padding: 20px; border-radius: 8px; border: 1px solid #ff6666;">
+              <h2 style="color: #D32F2F; text-align: center; font-size: 24px;">🚑 Emergency Alert</h2>
+              <p style="font-size: 18px; line-height: 1.6; color: #333;">
+                Hello <strong>${contact.name || 'Emergency Contact'}</strong>,<br><br>
+                This is an emergency alert for <strong>${user.name}</strong>. Please check on them immediately.<br><br>
+                If you need assistance, please call emergency services.<br><br>
+                <p style="font-size: 16px; color: #777;">
+                  <em>Stay safe and take action!</em>
+                </p>
+              </p>
+            </div>
+          `
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log('Emergency email sent to:', contact.email);
+
+        // Send SMS Alert
+        await twilioClient.messages.create({
+          body: `🚨 Emergency Alert: Please check on ${user.name} immediately!`,
+          from: process.env.TWILIO_PHONE_NUMBER,
+          to: contact.phone
+        });
+        console.log('Emergency SMS sent to:', contact.phone);
+
+        // Make Emergency Call
+        await makeCall(contact.phone, `Emergency Alert: Check on ${user.name}`);
+      }
+      return res.json({success:true, message:"Send Alert."});
+    }
+    return res.json({success:false, message:"No emergency Contact"});
+  } catch (error) {
+    console.log("Error sending emergency alerts:", error);
+    return res.json({success:false, message:error.message});
+  }
+};
+
+
+
+export {scheduleReminders,emergencyAlert};

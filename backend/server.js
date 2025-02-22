@@ -6,7 +6,7 @@ import connectCloudinary from "./config/cloudinary.js";
 import adminRouter from "./routes/addminRoute.js";
 import userRouter from "./routes/userRoute.js";
 import doctorRouter from "./routes/doctorRoute.js"
-import scheduleReminders from "./schedules/reminderScheduler.js"
+import {scheduleReminders} from "./schedules/reminderScheduler.js"
 import { AQIconfig } from "./config/AQI.js";
 import AQIrouter from "./routes/aqiRoute.js";
 import Analyzerouter from "./routes/analyseRoute.js";
