@@ -1,8 +1,11 @@
 import React from 'react'
+import AqiDataRender from '../components/AqiDataRender'
 
 function Contact() {
   return (
-    <div>Contact</div>
+    <div>
+      <AqiDataRender/>
+    </div>
   )
 }
 

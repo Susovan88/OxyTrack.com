@@ -4,6 +4,7 @@ import axios from 'axios';
 import { UseUserContext } from "../context/UserContext.jsx";
 import PieChartWithCustomizedLabel from'./PieChartOfAqi.jsx';
 import {toast} from "react-toastify";
+import RelatedDoctors from './RelatedDoctors.jsx';
 
 function TrackAllSymptoms() {
   const [symptomsData, setSymptomsData] = useState([]);
@@ -33,11 +34,11 @@ function TrackAllSymptoms() {
           headers: { uToken: uToken },
         });
 
-        console.log(data);
+        // console.log(data);
 
         if (data.success) {
           setSymptomsData(data.formattedData);
-          console.log(data.formattedData);
+          // console.log(data.formattedData);
         } else {
           console.error('There was an error fetching the symptoms data!');
         }
@@ -57,7 +58,7 @@ function TrackAllSymptoms() {
         });
 
         // Log the barChartData for validation
-        console.log(data.GeminiData);
+        console.log( "AI data-",data.GeminiData);
         setGeminiData(data.GeminiData);
 
         if (data.success) {
@@ -67,7 +68,7 @@ function TrackAllSymptoms() {
           console.log('Error fetching bar chart data!');
         }
       } catch (error) {
-        console.error('Error fetching symptoms data!', error);
+        console.log('Error fetching symptoms data!', error);
       }
     };
     TodeySymtom();
@@ -245,6 +246,7 @@ function TrackAllSymptoms() {
           {showBarChart ? 'Show Line Chart' : 'Show Bar Chart'}
         </button>
       </div>
+      <RelatedDoctors docId={98765} speciality={GeminiData.DoctorSpecialization}></RelatedDoctors>
     </>
   );
 }

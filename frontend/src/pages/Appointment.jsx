@@ -171,6 +171,7 @@ function Appointment() {
       {/* listing related Doctors  */}
       <RelatedDoctors docId={docId} speciality={docInfo.speciality}></RelatedDoctors>
     </div>
+    
   )
 }
 

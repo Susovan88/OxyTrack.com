@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { analyzeSymptoms } from "./analyseController.js";
 
 export const submitSymptoms = async (req, res) => {
+  console.log("hii");
   try {
     const userId = req.user._id;
 
@@ -17,6 +18,8 @@ export const submitSymptoms = async (req, res) => {
       userId,
       date: { $gte: startOfDay, $lte: endOfDay }
     });
+
+    console.log("symptom-",symptomLog);
 
     if (!symptomLog) {
       return res.status(404).json({ success: false, message: "No symptom log found for today." });
