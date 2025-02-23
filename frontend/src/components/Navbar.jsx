@@ -30,8 +30,8 @@ function Navbar() {
             <li className='py-1'>ABOUT</li>
             <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
           </NavLink>
-          <NavLink to={'/contact'}>
-            <li className='py-1'>CONTACT</li>
+          <NavLink to={'/aqi'}>
+            <li className='py-1'>AQI</li>
             <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
           </NavLink>
         </ul>
@@ -73,8 +73,8 @@ function Navbar() {
               <NavLink onClick={()=>setShowMenu(false)} to='/'><p className='px-4 py-2 rounded inline-block'>Home</p></NavLink>
               <NavLink onClick={()=>setShowMenu(false)} to='/doctors'><p className='px-4 py-2 rounded inline-block'>All Doctors</p></NavLink>
               <NavLink onClick={()=>setShowMenu(false)} to='/contact'><p className='px-4 py-2 rounded inline-block'>MEDICINE STORE</p></NavLink>
-              <NavLink onClick={()=>setShowMenu(false)} to='/about'><p className='px-4 py-2 rounded inline-block'>About</p></NavLink>
-              <NavLink onClick={()=>setShowMenu(false)} to='/contact'><p className='px-4 py-2 rounded inline-block'>Contact</p></NavLink>
+              <NavLink onClick={()=>setShowMenu(false)} to='/about'><p className='px-4 py-2 rounded inline-block'>ABOUT</p></NavLink>
+              <NavLink onClick={()=>setShowMenu(false)} to='/aqi'><p className='px-4 py-2 rounded inline-block'>AQI</p></NavLink>
             </ul>
           </div>
         </div>
