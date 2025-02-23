@@ -117,6 +117,20 @@ function TrackAllSymptoms() {
     getAqiData();
   }, [coords]);
 
+  const getRiskColor = (riskLevel) => {
+    switch (riskLevel.toLowerCase()) {
+      case "high":
+        return "text-red-600";
+      case "moderate":
+        return "text-orange-500";
+      case "yellow":
+        return "text-yellow-500";
+      case "low":
+        return "text-green-600";
+      default:
+        return "text-gray-700";
+    }
+  };
 
   return (
     <>
@@ -184,35 +198,34 @@ function TrackAllSymptoms() {
 
       {/* Header */}
       <h2 className="font-medium text-3xl text-neutral-800 mt-4">Personalized Health Assessment</h2>
-
-    <div className="p-6 bg-gray-100 min-h-screen flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-red-600 mb-4">Risk Level: {GeminiData.RiskLevel}</h2>
-        <p className="text-lg font-semibold">Potential Conditions:</p>
-        <ul className="list-disc pl-6 text-gray-700">
-          {GeminiData.PotentialConditions.map((condition, index) => (
-            <li key={index}>{condition}</li>
-          ))}
-        </ul>
-        <p className="mt-4 text-lg font-semibold">Doctor Specialization:</p>
-        <p className="text-gray-700">{GeminiData.DoctorSpecialization}</p>
-        <p className="mt-4 text-lg font-semibold text-red-600">Emergency Care Recommendations:</p>
-        <ul className="list-disc pl-6 text-gray-700">
-          {GeminiData.ActionableRecommendations.EmergencyCare.map((rec, index) => (
-            <li key={index}>{rec}</li>
-          ))}
-        </ul>
-        <p className="mt-4 text-lg font-semibold text-green-600">Home Care Recommendations:</p>
-        <ul className="list-disc pl-6 text-gray-700">
-          {GeminiData.ActionableRecommendations.HomeCare.map((rec, index) => (
-            <li key={index}>{rec}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
-
-    </div>
-
+      <div className="p-6 bg-gray-100 min-h-screen flex items-center justify-center">
+  <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+    <h2 className={`text-2xl font-bold mb-4 ${getRiskColor(GeminiData.RiskLevel)}`}>
+      Risk Level: {GeminiData.RiskLevel}
+    </h2>
+    <p className="text-lg font-semibold">Potential Conditions:</p>
+    <ul className="list-disc pl-6 text-gray-700">
+      {GeminiData.PotentialConditions.map((condition, index) => (
+        <li key={index}>{condition}</li>
+      ))}
+    </ul>
+    <p className="mt-4 text-lg font-semibold">Doctor Specialization:</p>
+    <p className="text-gray-700">{GeminiData.DoctorSpecialization}</p>
+    <p className="mt-4 text-lg font-semibold text-red-600">Emergency Care Recommendations:</p>
+    <ul className="list-disc pl-6 text-gray-700">
+      {GeminiData.ActionableRecommendations.EmergencyCare.map((rec, index) => (
+        <li key={index}>{rec}</li>
+      ))}
+    </ul>
+    <p className="mt-4 text-lg font-semibold text-green-600">Home Care Recommendations:</p>
+    <ul className="list-disc pl-6 text-gray-700">
+      {GeminiData.ActionableRecommendations.HomeCare.map((rec, index) => (
+        <li key={index}>{rec}</li>
+      ))}
+    </ul>
+  </div>
+</div>;
+</div>
       {/* LineChart */}
       <div>
         <h2 className='font-medium text-3xl text-neutral-800 mt-4'>Track All Previous Symptoms</h2>
