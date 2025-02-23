@@ -8,7 +8,7 @@ function Footer() {
   <div className="flex flex-col gap-14 my-10 mt-40 text-sm sm:grid sm:grid-cols-[3fr_1fr_1fr]">
     {/* Left Side */}
     <div>
-      <img className="mb-5 w-40" src={assets.logo} alt="" />
+      {/* <img className="mb-5 w-40" src={assets.logo} alt="" /> */}
       <p className="w-full text-gray-600 leading-6">
       OxyTrack is your trusted platform for respiratory health monitoring and care. Stay ahead with real-time insights, expert guidance, and seamless online consultations for better well-being.
       </p>
