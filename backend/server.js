@@ -10,6 +10,7 @@ import {scheduleReminders} from "./schedules/reminderScheduler.js"
 import { AQIconfig } from "./config/AQI.js";
 import AQIrouter from "./routes/aqiRoute.js";
 import Analyzerouter from "./routes/analyseRoute.js";
+import generateRouter from "./routes/generateRoute.js";
 
 
 env.config();
@@ -39,6 +40,8 @@ app.use('/api/aqi', AQIrouter);
 
 app.use('/api/analyze', Analyzerouter);
 
+app.use('/api/generate', generateRouter);
+
 app.get("/" ,(req,res)=>{
     res.send("Hello world");
 });
@@ -47,6 +50,7 @@ app.get("/" ,(req,res)=>{
 app.listen(port,()=>{
     console.log(`-> ->server is connected with port ${port}`);
 });
+
 
 
 
