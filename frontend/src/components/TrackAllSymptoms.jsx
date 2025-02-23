@@ -12,9 +12,6 @@ function TrackAllSymptoms() {
   const { uToken, backendUrl } = UseUserContext();
   const [showBarChart, setShowBarChart] = useState(false);
 
-  const [coords, setCoords] = useState({ latitude: null, longitude: null });
-  const [chartData, setChartData] = useState([]);
-  const [aqi, setAqi] = useState(null);
   const [GeminiData, setGeminiData] = useState({
     RiskLevel: "",
     PotentialConditions: [],
@@ -84,38 +81,38 @@ function TrackAllSymptoms() {
 
   // aqi ...
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          setCoords({ latitude, longitude });
-        },
-        (error) => {
-          console.error('Error getting location:', error);
-        }
-      );
-    } else {
-      console.log('Geolocation is not supported by this browser.');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         const latitude = position.coords.latitude;
+  //         const longitude = position.coords.longitude;
+  //         setCoords({ latitude, longitude });
+  //       },
+  //       (error) => {
+  //         console.log('Error getting location:', error);
+  //       }
+  //     );
+  //   } else {
+  //     console.log('Geolocation is not supported by this browser.');
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    const getAqiData = async () => {
-      if (coords.latitude && coords.longitude) {
-        try {
-          const { data } = await axios.get(`${backendUrl}/api/aqi/${coords.latitude}/${coords.longitude}`);
-          console.log('aqi data-', data);
-          setChartData(data.chartData);
-          setAqi(data.aqi);
-        } catch (error) {
-          console.log('Error fetching symptoms data!', error);
-        }
-      }
-    };
-    getAqiData();
-  }, [coords]);
+  // useEffect(() => {
+  //   const getAqiData = async () => {
+  //     if (coords.latitude && coords.longitude) {
+  //       try {
+  //         const { data } = await axios.get(`${backendUrl}/api/aqi/${coords.latitude}/${coords.longitude}`);
+  //         console.log('aqi data-', data);
+  //         setChartData(data.chartData);
+  //         setAqi(data.aqi);
+  //       } catch (error) {
+  //         console.log('Error fetching symptoms data!', error);
+  //       }
+  //     }
+  //   };
+  //   getAqiData();
+  // }, [coords]);
 
   const getRiskColor = (riskLevel) => {
     switch (riskLevel.toLowerCase()) {
@@ -161,7 +158,7 @@ function TrackAllSymptoms() {
 
               {/* Emergency Alert Section (only show if Oxygen Level is risky) */}
       {data.oxygenLevel < 90 && (
-        <div className="emergency-alert mt-6 p-4 bg-red-100 border-l-4 border-red-600 rounded-md">
+        <div className="emergency-alert mt-6 p-4 bg-red-100 border-l-4 border-red-600 rounded-md pb-10">
           <h3 className="font-medium text-xl text-red-600">Emergency Alert</h3>
           <p className="text-sm text-red-700 mt-2">
             Your oxygen level is risky. Please take immediate action and the alert emergency message already Provided.
@@ -172,8 +169,8 @@ function TrackAllSymptoms() {
 
       {/* Header */}
       <h2 className="font-medium text-3xl text-neutral-800 mt-4">Personalized Health Assessment</h2>
-      <div className="p-6 bg-gray-100 min-h-screen flex items-center justify-center">
-  <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+
+  <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md pb-10">
     <h2 className={`text-2xl font-bold mb-4 ${getRiskColor(GeminiData.RiskLevel)}`}>
       Risk Level: {GeminiData.RiskLevel}
     </h2>
@@ -198,7 +195,6 @@ function TrackAllSymptoms() {
       ))}
     </ul>
   </div>
-</div>;
 </div>
       {/* LineChart */}
       <div>
