@@ -2,6 +2,9 @@ import cron from 'node-cron';
 import nodemailer from 'nodemailer';
 import twilio from 'twilio';
 import Medication from '../models/medicationModel.js';
+import axios from 'axios';
+import User from '../models/userModel.js';
+
 
 // Create transport for email
 const transporter = nodemailer.createTransport({
@@ -44,16 +47,9 @@ const scheduleReminders = async () => {
       medications.forEach(async (med) => {
         console.log(`Sending reminder for medication: ${med.medicationName}`);
 
-        // Send email reminder
-        /*const mailOptions = {
-          from: process.env.EMAIL_USER,
-          to: med.userId.email,  // Assuming User model has email
-          subject: 'Medication Reminder',
-          text: `Hello, it's time to take your medication: ${med.medicationName}. Please take it on time!`
-        };*/
         const mailOptions = {
           from: process.env.EMAIL_USER,
-          to: med.userId.email,  // Assuming User model has email
+          to: med.userId.email,  
           subject: 'Medication Reminder',
           html: `
             <div style="font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd;">
@@ -97,10 +93,18 @@ const scheduleReminders = async () => {
 };
 
 
+
+
+
 const emergencyAlert = async (req,res) => {
   try {
+    console.log("Risky0000000000000000000000000000222");
+    const userId= req.header('userId');
 
-    const user= req.user;
+    if (!userId) {
+      return res.status(400).json({ success: false, message: "User ID is required." });
+    }
+    const user = await User.findById(userId);
     console.log(`Sending emergency alerts for ${user.name}`);
 
     if (user.emergencyContacts && user.emergencyContacts.length > 0) {
@@ -147,7 +151,6 @@ const emergencyAlert = async (req,res) => {
     return res.json({success:false, message:error.message});
   }
 };
-
 
 
 export {scheduleReminders,emergencyAlert};

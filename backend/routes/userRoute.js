@@ -44,7 +44,7 @@ userRouter.delete('/book-appointment/:id', authUser, cancleAppointment);
 userRouter.get('/analyse-symptom',authUser,submitSymptoms);
 
 
-userRouter.get('/emergrncy-alert',authUser,emergencyAlert);
+userRouter.get('/emergrncy-alert',emergencyAlert);
 
 
 

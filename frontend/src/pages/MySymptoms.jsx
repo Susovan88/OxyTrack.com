@@ -56,13 +56,6 @@ export default function MySymptoms() {
 
     try {
       const response = await axios.post(backendUrl+"/api/user/symptoms", formData,{headers:{uToken:uToken}});
-      // console.log(response.data);
-      if(response.data.oxygenLevel <90){
-        const {data} =await axios.get(`${backendUrl}/api/user/emergrncy-alert`,{ headers: { uToken: uToken }});
-        if( data.success){
-          toast.success(data.message);
-        }
-      } 
 
       setFormData({
         symptoms: {

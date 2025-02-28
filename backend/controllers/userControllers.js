@@ -6,6 +6,8 @@ import {v2 as cloudinary}from "cloudinary";
 import Medication from "../models/medicationModel.js";
 import Medicine from "../models/medicineModel.js"
 import Order from "../models/orderModel.js";
+import axios from 'axios';
+
 
 const userSignup= async (req, res) => {
     try {
@@ -106,7 +108,6 @@ const editProfile = async (req, res) => {
     existingUser.dob = dob || existingUser.dob;
     existingUser.image = image;
 
-    // ✅ Ensure emergencyContacts are updated correctly
     if (emergencyContact) {
       if (Array.isArray(emergencyContact)) {
         // If already an array, replace the entire array
@@ -126,39 +127,6 @@ const editProfile = async (req, res) => {
     return res.json({ success: false, message: error.message });
   }
 };
-
-
-
-
-
-// const editProfile=async(req,res)=>{
-//   console.log(req.file);
-//   try {
-//     const { name, email, phone, address, gender, dob } = req.body;
-
-//     const existingUser = await User.findById(req.user._id);
-//     if (!existingUser) {
-//       return res.status(404).json({ success: false, message: "User not found" });
-//     }
-
-//     const image = req.file ? (await cloudinary.uploader.upload(req.file.path,{resource_type:"image"})) : existingUser.image;
-
-//     existingUser.name = name || existingUser.name;
-//     existingUser.email = email || existingUser.email;
-//     existingUser.phone = phone || existingUser.phone;
-//     existingUser.address = address || existingUser.address;
-//     existingUser.gender = gender || existingUser.gender;
-//     existingUser.dob = dob || existingUser.dob;
-//     existingUser.image = image.secure_url? image.secure_url : image;
-
-//     const updatedUser = await existingUser.save();
-//     // console.log(updatedUser);
-//     res.json({ success: true, message: "Profile updated successfully", user: updatedUser });
-//   } catch (error) {
-//     console.log(error);
-//     return res.json({ success: false, message:error.message });
-//   }
-// }
 
 
 
@@ -203,23 +171,33 @@ const saveSymtom=async(req,res)=>{
 
     // Save to database
     await newSymptom.save();
-    await User.findByIdAndUpdate(
+
+    const currUser=await User.findByIdAndUpdate(
       req.user._id,
       { $push: { symptoms: newSymptom._id } },
       { new: true }
     )
-    console.log("Symptoms recorded successfully!",newSymptom);
+    console.log("User--",currUser);
 
-
+    if(newSymptom.oxygenStatus==="Risky"){
+      console.log("Risky0000000000000000000000000000");
+      console.log("Emergency Alert API URL:", `${process.env.BACKEND_URL}/api/user/emergrncy-alert`);
+      const {data} =await axios.get(`${process.env.BACKEND_URL}/api/user/emergrncy-alert`,{ headers: { userId: currUser._id }});
+      if( data.success){
+        console.log(data.message);
+        return res.json({ success:true, message: "Your oxygen levels are critically low. However, no family contact details are available to send an emergency alert. Please seek immediate assistance.", data: newSymptom });
+      }
+      console.log(data.message);
+      return res.json({ success:true, message: "Your oxygen levels are critically low. An emergency alert has been automatically sent to your family members.", data: newSymptom });
+    }
 
     return res.json({ success:true, message: "Symptoms recorded successfully!", data: newSymptom });
   } catch (error) {
-    // console.error("Error saving symptoms:", error);
+    console.log("Error saving symptoms:", error);
     return res.json({success:false, message:error.message });
   }
 
 }
-
 
 
 // Medication functions....
