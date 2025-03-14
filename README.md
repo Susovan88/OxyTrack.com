@@ -12,5 +12,3 @@
   - **Online appointment scheduling** with real-time availability.  
   - **Air Quality Index (AQI) check** for respiratory risk assessment.  
   - **Emergency alert system** for critical health conditions.  
-
-This format improves clarity and makes it easier to read in a resume. 🚀 Let me know if you need further refinements! 😊
