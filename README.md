@@ -1,1 +1,14 @@
-•	Developed a full-stack Smart Respiratory Heath Monitoring System with React.js, Node.js, Express.js, and MongoDB, featuring secure online payments, virtual consultations, and an AI-powered chatbot for query resolution. Implemented role-based authentication with JWT and designed a mobile-responsive UI with REST APIs for seamless booking, schedule management, and payments. Advanced Features: Symptom Tracking, Medication Adherence System, Online Appointment, AQI Check, Emergency Alert System etc.
+- **Developed** a full-stack **Smart Respiratory Health Monitoring System** using **React.js, Node.js, Express.js, and MongoDB**.  
+- **Integrated Features:**  
+  - **Secure online payments** for seamless transactions.  
+  - **Virtual consultations** with healthcare professionals.  
+  - **AI-powered chatbot** for instant query resolution.  
+  - **Role-based authentication** with JWT for enhanced security.  
+  - **Mobile-responsive UI** for a seamless user experience.  
+  - **REST APIs** for booking, schedule management, and payments.  
+- **Advanced Functionalities:**  
+  - **Symptom tracking** for respiratory health monitoring.  
+  - **Medication adherence system** to ensure proper dosage tracking.  
+  - **Online appointment scheduling** with real-time availability.  
+  - **Air Quality Index (AQI) check** for respiratory risk assessment.  
+  - **Emergency alert system** for critical health conditions.  
