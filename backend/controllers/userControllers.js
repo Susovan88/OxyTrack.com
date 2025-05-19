@@ -96,7 +96,7 @@ const editProfile = async (req, res) => {
       return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    const image = req.file 
+    const image = req.file
       ? (await cloudinary.uploader.upload(req.file.path, { resource_type: "image" })).secure_url
       : existingUser.image;
 
