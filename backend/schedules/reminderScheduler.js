@@ -5,7 +5,6 @@ import Medication from '../models/medicationModel.js';
 import axios from 'axios';
 import User from '../models/userModel.js';
 
-
 // Create transport for email
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -92,10 +91,6 @@ const scheduleReminders = async () => {
   }
 };
 
-
-
-
-
 const emergencyAlert = async (req,res) => {
   try {
     console.log("Risky0000000000000000000000000000222");
@@ -151,6 +146,5 @@ const emergencyAlert = async (req,res) => {
     return res.json({success:false, message:error.message});
   }
 };
-
 
 export {scheduleReminders,emergencyAlert};

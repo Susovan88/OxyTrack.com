@@ -17,7 +17,7 @@ import MedicationReminder from './pages/MedicationReminder';
 import MyMedictionReminder from './pages/MyMedictionReminder';
 import MedicineStore from './pages/MedicineStore';
 import MyOrderList from './pages/MyOrderList';
-import VideoCall from './pages/VideoCall';
+import VideoMeet from './pages/VideoMeet';
 
 const App = () => {
   return (
@@ -46,8 +46,8 @@ const App = () => {
         <Route path='/my-order-list' element={<MyOrderList/>}/>
         <Route path='/mediction-reminder' element={<MyMedictionReminder/>}/>
         <Route path='/my-appointments' element={<MyAppointments/>} />
-        <Route path='/online-meeting/:id' element={<VideoCall/>} />
         <Route path='/appointment/:docId' element={<Appointment/>} />
+        <Route path='/meeting/:url' element={<VideoMeet/>}/>
       </Routes>
       <Footer/>
     </div>
