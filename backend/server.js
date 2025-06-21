@@ -22,12 +22,24 @@ const io=socketManager(server);
 const port=process.env.PORT;
 
 //middlewares
-app.use(cors({
-    origin: "http://localhost:5173",
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like Postman or curl)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type","utoken"],
-    credentials: true
-}));     // it is allow to connect frontend to backend
+    allowedHeaders: ["Content-Type", "utoken" , "atoken" , "dtoken"],
+    credentials: true,
+  })
+);   // it is allow to connect frontend to backend
 
 app.use(express.json());  
 app.use(express.urlencoded({ extended: true })); 
